@@ -1,0 +1,44 @@
+ 
+      ("document.addEventListenerDOMContentLoaded", () => {
+    let startY = 0;
+    const challenges = [
+        { 
+            question: "Prietenul tău îți cere bani, dar știi că minte.", 
+            twists: ["Îi dai banii", "Îl refuzi", "Îi propui altă soluție"] 
+        },
+        { 
+            question: "Găsești un telefon pierdut.", 
+            twists: ["Îl returnezi", "Îl păstrezi", "Cauți proprietarul online"] 
+        }
+    ];
+    
+    let current = 0;
+    const questionEl = document.getElementById("question");
+    const buttonsEl = document.getElementById("buttons");
+
+    function renderChallenge() {
+        const challenge = challenges[current];
+        questionEl.textContent = challenge.question;
+        buttonsEl.innerHTML = "";
+        challenge.twists.forEach(twist => {
+            const btn = document.createElement("button");
+            btn.textContent = twist;
+            btn.onclick = () => alert("Ai ales: " + twist);
+            buttonsEl.appendChild(btn);
+        });
+    }
+
+    document.addEventListener("touchstart", e => {
+        startY = e.touches[0].clientY;
+    });
+
+    document.addEventListener("touchend", e => {
+        let endY = e.changedTouches[0].clientY;
+        if (startY - endY > 50) {
+            current = (current + 1) % challenges.length;
+            renderChallenge();
+        }
+    });
+
+    renderChallenge();
+});
