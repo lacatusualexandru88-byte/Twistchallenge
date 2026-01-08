@@ -1,5 +1,6 @@
  
-      ("document.addEventListenerDOMContentLoaded", () => {
+      document.addEventListener("DOMContentLoaded", () => {
+
     let startY = 0;
     const challenges = [
         { 
