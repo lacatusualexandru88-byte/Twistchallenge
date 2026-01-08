@@ -69,3 +69,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderChallenge();
 });
+const card = document.querySelector('.card');
+
+let startX = 0;
+let currentX = 0;
+let isDragging = false;
+
+// Când începi să atingi cardul
+card.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  isDragging = true;
+  card.style.transition = 'none'; // scoate tranziția temporar
+});
+
+// Când miști degetul
+card.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+
+  currentX = e.touches[0].clientX;
+  const diffX = currentX - startX;
+
+  card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.05}deg)`;
+});
+
+// Când ridici degetul
+card.addEventListener('touchend', () => {
+  isDragging = false;
+  card.style.transition = 'transform 0.3s ease';
+
+  const diffX = currentX - startX;
+
+  if (diffX > 120) {
+    swipeRight();
+  } else if (diffX < -120) {
+    swipeLeft();
+  } else {
+    resetCard();
+  }
+});
+
+// Funcțiile pentru swipe
+function swipeRight() {
+  card.style.transform = 'translateX(100vw) rotate(20deg)';
+  setTimeout(nextQuestion, 300);
+}
+
+function swipeLeft() {
+  card.style.transform = 'translateX(-100vw) rotate(-20deg)';
+  setTimeout(nextQuestion, 300);
+}
+
+function resetCard() {
+  card.style.transform = 'translateX(0)';
+}
+
+// Schimbarea întrebării (presupune că ai un array cu întrebări)
+const questions = [
+  "Întrebarea 1",
+  "Întrebarea 2",
+  "Întrebarea 3"
+];
+let index = 0;
+
+function nextQuestion() {
+  index = (index + 1) % questions.length;
+  document.getElementById('question').innerText = questions[index];
+
+  card.style.transition = 'none';
+  card.style.transform = 'translateX(0)';
+}
