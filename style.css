@@ -75,3 +75,31 @@ button:active {
     transform: translateY(0);
   }
 }
+/* Containerul aplicației */
+#app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* ascunde cardurile care ies din ecran */
+}
+
+/* Cardul */
+.card {
+  width: 90%;
+  max-width: 400px;
+  background: #111;       /* fundal întunecat, poți schimba */
+  color: #fff;            /* text alb */
+  border-radius: 20px;    /* colțuri rotunjite */
+  padding: 30px;
+  text-align: center;
+  font-size: 20px;
+
+  /* pentru swipe */
+  touch-action: none;     /* dezactivează scroll-ul mobil */
+  user-select: none;      /* dezactivează selectarea textului */
+
+  /* tranziții pentru animație smooth */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
